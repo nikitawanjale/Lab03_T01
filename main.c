@@ -1,5 +1,8 @@
 /*
  * main.c
+ Lab03-T02 Change the delay of the LED blink (approx. 0.5 sec) by changing the clock source and
+configuration ‚Äì do not change the delay value ‚Äì determine the CLK frequency ‚Äì verify the delay
+to be approx 0.5 sec.
  */
 #include <stdint.h>
 #include <stdbool.h>
@@ -30,14 +33,14 @@ int main(void)
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
 
-	//create a while(1) loop to send a ì1î and ì0î to the selected GPIO pin, with an
+	//create a while(1) loop to send a ‚Äú1‚Äù and ‚Äú0‚Äù to the selected GPIO pin, with an
 	//equal delay between the two.
 	while(1)
 	{
 		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1| GPIO_PIN_2| GPIO_PIN_3, ui8PinData);
-		SysCtlDelay(2000000);
+		SysCtlDelay(2000000);	//Each loop cycle is for 3 CPU cycles. Freq=12.5MHz, Delay=0.48seconds
 		GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3,0x00);
-		SysCtlDelay(2000000);
+		SysCtlDelay(2000000);	//Each loop cycle is for 3 CPU cycles. Freq=12.5MHz, Delay=0.48seconds
 		if(ui8PinData==8) {ui8PinData=2;} else {ui8PinData=ui8PinData*2;}
 	}
 }
